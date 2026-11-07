@@ -184,7 +184,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.kaii.photos.LavenderPhotos.fileprovider"
+            android:authorities="${applicationId}.LavenderPhotos.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -193,7 +193,7 @@
         </provider>
         <provider
             android:name=".mediastore.LavenderContentProvider"
-            android:authorities="com.kaii.photos.content_provider"
+            android:authorities="${applicationId}.content_provider"
             android:enabled="true"
             android:exported="false" />
     </application>

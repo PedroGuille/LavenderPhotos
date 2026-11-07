@@ -50,6 +50,11 @@ android {
     }
 
     buildTypes {
+        getByName("debug") {
+            applicationIdSuffix = ".issue337test"
+            versionNameSuffix = "-issue337test"
+        }
+
         release {
             isMinifyEnabled = true
             isShrinkResources = true

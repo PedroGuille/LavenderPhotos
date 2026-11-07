@@ -14,6 +14,7 @@ import android.util.Log
 import androidx.core.database.getLongOrNull
 import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
+import com.kaii.photos.BuildConfig
 import com.kaii.photos.database.entities.MediaStoreData
 import com.kaii.photos.helpers.EXTERNAL_DOCUMENTS_AUTHORITY
 import com.kaii.photos.helpers.appRestoredFilesDir
@@ -31,7 +32,7 @@ import kotlin.time.ExperimentalTime
 
 private const val TAG = "com.kaii.photos.mediastore.MediaStoreUtils"
 
-const val LAVENDER_FILE_PROVIDER_AUTHORITY = "com.kaii.photos.LavenderPhotos.fileprovider"
+val LAVENDER_FILE_PROVIDER_AUTHORITY = "${BuildConfig.APPLICATION_ID}.LavenderPhotos.fileprovider"
 
 /** @param media the [MediaStoreData] to copy
  * @param destination the absolute path to copy [media] to */

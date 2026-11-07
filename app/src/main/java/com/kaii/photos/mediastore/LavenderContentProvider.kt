@@ -12,10 +12,11 @@ import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import android.provider.MediaStore.MediaColumns
 import androidx.core.net.toUri
+import com.kaii.photos.BuildConfig
 
 class LavenderContentProvider : ContentProvider() {
     companion object {
-        private const val AUTHORITY = "com.kaii.photos.content_provider"
+        private val AUTHORITY = "${BuildConfig.APPLICATION_ID}.content_provider"
 
         private const val TABLE_NAME = "custom_albums"
         val CONTENT_URI: Uri = "content://$AUTHORITY/$TABLE_NAME".toUri()
