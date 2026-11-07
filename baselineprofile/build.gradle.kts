@@ -13,7 +13,11 @@ kotlin{
 
 android {
     namespace = "com.kaii.lavender.baselineprofile"
-    compileSdk = 37
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 0
+        }
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
