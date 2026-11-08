@@ -53,3 +53,40 @@ jobs:
           name: issue356-test-results
           path: app/build/reports/tests/testDebugUnitTest
           if-no-files-found: ignore
+
+  cover-storage-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+      - uses: android-actions/setup-android@v4
+      - name: Install compile SDK
+        run: sdkmanager "platforms;android-37.0" "build-tools;37.0.0"
+      - name: Build instrumented storage tests for emulator
+        run: |
+          sed -i 's/arrayOf("armeabi-v7a", "arm64-v8a")/arrayOf("x86_64")/' app/build.gradle.kts
+          ./gradlew :app:assembleDebug :app:assembleDebugAndroidTest --no-daemon --console=plain
+      - name: Enable KVM
+        run: sudo chmod 666 /dev/kvm
+      - name: Verify cover persistence, replacement, and reset on Android
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          ram-size: 1536M
+          disable-animations: true
+          script: ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.kaii.photos.AlbumCoverStoreTest --no-daemon --console=plain
+      - name: Upload Android test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue356-android-test-results
+          path: app/build/reports/androidTests/connected
+          if-no-files-found: ignore
